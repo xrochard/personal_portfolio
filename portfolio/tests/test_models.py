@@ -13,6 +13,7 @@ class ProjectModelTest(TestCase):
             ["title", "Nice title"],
             ["description", "Nice description, longer than title"],
             ["url", "http://just_an_url.com"],
+            ["image", "protfolio/images/pal_gwang.png"],
         ]
     )
     def test_project_has(self, attribute, value):
