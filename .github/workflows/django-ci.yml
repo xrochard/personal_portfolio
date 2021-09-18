@@ -93,8 +93,8 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      COVERAGE_SINGLE: 0
-      COVERAGE_TOTAL: 0
+      COVERAGE_SINGLE: 100
+      COVERAGE_TOTAL: 100
 
     steps:
     - uses: actions/checkout@v2
@@ -112,7 +112,7 @@ jobs:
       uses: alexanderdamiani/pytester-cov@v1.2.1
       with:
         pytest-root-dir: '.'
-        cov-omit-list: 'core/*, */admin.py, */apps.py, manage.py, **/__init__.py, */tests/**'
+        cov-omit-list: 'core/*, */admin.py, */apps.py, manage.py, **/__init__.py, */tests/**, blog/*, portfolio/view.py'
         cov-threshold-single: ${{ env.COVERAGE_SINGLE }}
         cov-threshold-total: ${{ env.COVERAGE_TOTAL }}
 
