@@ -170,7 +170,9 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Scan Django settings for security issues
       id: check
-      uses: victoriadrake/django-security-check@master
+      # Greatly inspired from victoriadrake/django-security-check@master (not used because I need to change the installed modules)
+      run: |
+        python manage.py check --deploy --fail-level ERROR &> output.txt
     - id: results
       run: |
         OUTPUT=$(cat output.txt)
@@ -180,11 +182,11 @@ jobs:
       uses: peter-evans/commit-comment@v1
       with:
         body: ${{ steps.results.outputs.file }}
-    - name: error if ERROR or CRITICAL
-      if: contains(steps.results.outputs.file, 'ERROR') || contains(steps.results.outputs.file, 'CRITICALS')
-      run: |
-        echo "security issues detected"
-        exit 1
+    # - name: error if ERROR or CRITICAL
+    #   if: contains(steps.results.outputs.file, 'ERROR') || contains(steps.results.outputs.file, 'CRITICALS')
+    #   run: |
+    #     echo "security issues detected"
+    #     exit 1
 
 # The next job creates an issue if the former job faiiled
 
