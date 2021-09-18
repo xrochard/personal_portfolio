@@ -40,8 +40,9 @@ jobs:
         python manage.py migrate
     - name: Test a connection to Django (sanity check)
       run: python manage.py test core/
-    # - name: run apps unit and integration tests
-    #   run: python manage.py test app/tests/
+    - name: run apps unit and integration tests
+      run: python manage.py test blog/tests/
+      run: python manage.py test portfolio/tests/
 
 
 # The next job creates an issue if the former job faiiled
