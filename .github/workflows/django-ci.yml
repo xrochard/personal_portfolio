@@ -93,7 +93,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      COVERAGE_SINGLE: 60
+      COVERAGE_SINGLE: 0
       COVERAGE_TOTAL: 0
 
     steps:
