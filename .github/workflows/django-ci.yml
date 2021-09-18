@@ -172,7 +172,7 @@ jobs:
       id: check
       # Greatly inspired from victoriadrake/django-security-check@master (not used because I need to change the installed modules)
       run: |
-        python manage.py check --deploy --fail-level ERROR &> output.txt
+        python manage.py check --deploy --fail-level WARNING &> output.txt
     - id: results
       run: |
         OUTPUT=$(cat output.txt)
