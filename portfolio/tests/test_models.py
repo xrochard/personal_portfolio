@@ -12,6 +12,7 @@ class ProjectModelTest(TestCase):
         [
             ["title", "Nice title"],
             ["description", "Nice description, longer than title"],
+            ["url", "http://just_an_url.com"],
         ]
     )
     def test_project_has(self, attribute, value):
@@ -20,3 +21,7 @@ class ProjectModelTest(TestCase):
             **constructor_argument
         )
         self.assertIsNotNone(test_project)
+
+    def test_project_with_empty_url(self):
+        test_project = Project.objects.create()  # pylint: disable=no-member
+        self.assertEqual("", test_project.url)
