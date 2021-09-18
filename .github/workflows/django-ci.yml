@@ -68,7 +68,8 @@ jobs:
 
 # The next job runs the coverage on all files recursively from the pytest-root-dir
 # It is also configured to exit with error if individual file minimum coverage or total pytest minimumm coverage are not met
-# If it exits with error, an issue is created. If it succeeds, a comment is added to the commit in GitHub with the pytest --cov markdown table
+# If it exits with error, an issue is created. 
+# If it succeeds, a comment is added to the commit in GitHub with the pytest --cov markdown table
 #
 # Variables to set:
 #   * pytester action:
@@ -82,12 +83,6 @@ jobs:
 #   * output-table: `pytest --cov` markdown output table
 #   * cov-threshold-single-fail: `false` if any single file coverage less than `cov-threshold-single`, else `true`
 #   * cov-threshold-total-fail: `false` if total coverage less than `cov-threshold-total`, else `true`
-#
-# Workflows used:
-#   * actions/checkout@v2: checkout files to perform additional actions on
-#   * alexanderdamiani/pytester-cov@v1.0.0: runs pytest --cov and associated functions
-#   * nashmaniac/create-issue-action@v1.1: creates issue for repo
-#   * peter-evans/commit-comment@v1: adds a comment to the commit in GitHub
         
   coverage:
 
@@ -172,7 +167,7 @@ jobs:
       id: check
       # Greatly inspired from victoriadrake/django-security-check@master (not used because I need to change the installed modules)
       run: |
-        python manage.py check --deploy --fail-level WARNING &> output.txt
+        python manage.py check --deploy --fail-level ERROR &> output.txt
     - id: results
       run: |
         OUTPUT=$(cat output.txt)
@@ -182,11 +177,6 @@ jobs:
       uses: peter-evans/commit-comment@v1
       with:
         body: ${{ steps.results.outputs.file }}
-    # - name: error if ERROR or CRITICAL
-    #   if: contains(steps.results.outputs.file, 'ERROR') || contains(steps.results.outputs.file, 'CRITICALS')
-    #   run: |
-    #     echo "security issues detected"
-    #     exit 1
 
 # The next job creates an issue if the former job faiiled
 
