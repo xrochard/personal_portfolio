@@ -1,6 +1,5 @@
 from portfolio.models import Project
 from django.test import TestCase
-from portfolio.models import Project
 from portfolio import views
 
 
