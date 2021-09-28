@@ -27,4 +27,4 @@ class HomeTemplateTests(LiveServerTestCase):
     def test_expected_failure(self):
         self.driver.get("%s%s" % (self.live_server_url, ""))
         elements = self.driver.find_elements(By.TAG_NAME, "h1")
-        self.assertEqual(2, len(elements))
+        self.assertEqual(1, len(elements))
