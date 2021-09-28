@@ -13,6 +13,8 @@ class HomeTemplateTests(LiveServerTestCase):
         options.headless = True
         if os.name == "nt":
             driver_exe = "utils/geckodriver.exe"
+        else:
+            driver_exe = "utils/geckodriver"
         cls.driver = webdriver.Firefox(
             options=options, executable_path=driver_exe, service_log_path=os.devnull
         )
