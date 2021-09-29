@@ -10,9 +10,13 @@ class HomePageTest(TestCase):
             self.assertEqual(response.status_code, 200)
 
 
-class ProjectModelTest(TestCase):
-    def test_all_projects_gets_all_projects(self):
+class ViewsTest(TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        super(ViewsTest, cls).setUpClass()
         Project.objects.create(title="project_1")  # pylint: disable=no-member
         Project.objects.create(title="project_2")  # pylint: disable=no-member
+
+    def test_all_projects_gets_all_projects(self):
         result = views.all_projects()
         self.assertEqual(2, len(result))
