@@ -6,9 +6,9 @@ on: workflow_dispatch
 
 jobs:
   call-workflow-django-test:
-    uses: xrochard/personal_portfolio/.github/workflows/django-test-reusable.yml@v0.1
+    uses: xrochard/personal_portfolio/.github/workflows/django-test-reusable.yml@v1
   call-workflow-django-extra:
-    uses: xrochard/personal_portfolio/.github/workflows/django-extra-ci-reusable.yml@v0.2
+    uses: xrochard/personal_portfolio/.github/workflows/django-extra-ci-reusable.yml@v1
 
-#   - All nine yyards
+#   - All nine yards
 #     It is quite slow
