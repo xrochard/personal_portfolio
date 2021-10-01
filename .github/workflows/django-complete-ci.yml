@@ -1,0 +1,15 @@
+# for details information, see at the bottom
+
+name: Django complete tests coverage and security check
+
+on:
+  workflow-dispatch:
+
+jobs:
+  call-workflow-django-test:
+    uses: xrochard/personal_portfolio/.github/workflows/django-test-reusable.yml@v0.1
+  call-workflow-django-extra:
+    uses: xrochard/personal_portfolio/.github/workflows/django-extra-ci-reusable.yml@v0.2
+
+#   - All nine yyards
+#     It is quite slow
