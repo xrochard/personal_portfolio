@@ -2,7 +2,7 @@
 
 name: Django complete tests coverage and security check
 
-on: workflow-dispatch
+on: workflow_dispatch
 
 jobs:
   call-workflow-django-test:
