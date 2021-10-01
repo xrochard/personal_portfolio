@@ -56,11 +56,11 @@ class HomeTemplateTests(LiveServerTestCase):
         ]
         self.assertEqual(2, len(rendered_projects))
 
-    def test_home_has_one_div_per_project_with_one(self):
-        Project.objects.create(title="project")  # pylint: disable=no-member
-        self.driver.get("%s%s" % (self.live_server_url, ""))
-        divs = self.driver.find_elements(By.TAG_NAME, "div")
-        rendered_projects = [
-            div for div in divs if div.get_attribute("id") == "project_id"
-        ]
-        self.assertEqual(1, len(rendered_projects))
+    # def test_home_has_one_div_per_project_with_one(self):
+    #     Project.objects.create(title="project")  # pylint: disable=no-member
+    #     self.driver.get("%s%s" % (self.live_server_url, ""))
+    #     divs = self.driver.find_elements(By.TAG_NAME, "div")
+    #     rendered_projects = [
+    #         div for div in divs if div.get_attribute("id") == "project_id"
+    #     ]
+    #     self.assertEqual(1, len(rendered_projects))
