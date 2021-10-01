@@ -1,4 +1,3 @@
-from django.http import response
 from portfolio.models import Project
 from django.test import TestCase
 from portfolio import views

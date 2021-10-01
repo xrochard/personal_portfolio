@@ -1,5 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+# for details information, see at the bottom
 
 name: Django complete tests
 
@@ -46,8 +45,6 @@ jobs:
         python manage.py test portfolio/tests/
 
 
-# The next job creates an issue if the former job faiiled
-
   post-django-ci:
 
     runs-on: ubuntu-latest
@@ -65,25 +62,6 @@ jobs:
         labels: worflow-failed
         body: 
 
-
-# The next job runs the coverage on all files recursively from the pytest-root-dir
-# It is also configured to exit with error if individual file minimum coverage or total pytest minimumm coverage are not met
-# If it exits with error, an issue is created. 
-# If it succeeds, a comment is added to the commit in GitHub with the pytest --cov markdown table
-#
-# Variables to set:
-#   * pytester action:
-#     * pytest-root-dir: top-level directory to recursively check all .py files for pytest --cov
-#     * cov-omit-list: comma separated str of all files and/or dirs to ignore
-#   * env:
-#     * cov-threshold-single: minimum individual file coverage required
-#     * cov-threshold-total: minimum total coverage required
-#
-# Action outputs:
-#   * output-table: `pytest --cov` markdown output table
-#   * cov-threshold-single-fail: `false` if any single file coverage less than `cov-threshold-single`, else `true`
-#   * cov-threshold-total-fail: `false` if total coverage less than `cov-threshold-total`, else `true`
-        
   coverage:
 
     runs-on: ubuntu-latest
@@ -148,7 +126,6 @@ jobs:
       with:
         body: ${{ steps.pytester-cov.outputs.output-table }}
 
-# The next job runs a security check on Django
   security-check:
 
     runs-on: ubuntu-latest
@@ -165,7 +142,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Scan Django settings for security issues
       id: check
-      # Greatly inspired from victoriadrake/django-security-check@master (not used because I need to change the installed modules)
       run: |
         python manage.py check --deploy --fail-level ERROR &> output.txt
     - id: results
@@ -177,8 +153,6 @@ jobs:
       uses: peter-evans/commit-comment@v1
       with:
         body: ${{ steps.results.outputs.file }}
-
-# The next job creates an issue if the former job faiiled
 
   post-django-security-check:
 
@@ -196,3 +170,26 @@ jobs:
         assignees: ${{github.actor}}
         labels: worflow-failed
         body: Check the comment associated with the commit
+
+# List of the jobs:
+#   - "django-ci" will install Python dependencies, run tests and lint with a single version of Python
+#     For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+#   - "post-django-ci" creates an issue if "django-ci" failed
+#   - "coverage" runs the coverage on all files recursively from the pytest-root-dir
+#     It is also configured to exit with error if individual file minimum coverage or total pytest minimumm coverage are not met
+#     If it exits with error, an issue is created. 
+#     If it succeeds, a comment is added to the commit in GitHub with the pytest --cov markdown table
+#     Variables to set:
+#       * pytester action:
+#         * pytest-root-dir: top-level directory to recursively check all .py files for pytest --cov
+#         * cov-omit-list: comma separated str of all files and/or dirs to ignore
+#       * env:
+#         * cov-threshold-single: minimum individual file coverage required
+#         * cov-threshold-total: minimum total coverage required
+#     Action outputs:
+#       * output-table: `pytest --cov` markdown output table
+#       * cov-threshold-single-fail: `false` if any single file coverage less than `cov-threshold-single`, else `true`
+#       * cov-threshold-total-fail: `false` if total coverage less than `cov-threshold-total`, else `true`
+#   - "security-check" runs a security check on Django
+#     It is greatly inspired from victoriadrake/django-security-check@master (not used because I need to change the installed modules)
+#   - "post-django-security-check" creates an issue if "security-check" failed

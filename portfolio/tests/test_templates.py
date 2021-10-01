@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 import os
+from portfolio.models import Project
 
 
 class HomeTemplateTests(LiveServerTestCase):
@@ -24,7 +25,42 @@ class HomeTemplateTests(LiveServerTestCase):
         cls.driver.quit()
         super(HomeTemplateTests, cls).tearDownClass()
 
-    def test_expected_failure(self):
+        # Project.objects.create(  # pylint: disable=no-member
+        #     title="project_1",
+        #     description="project_1_description",
+        #     url="http://url_to_project_1/",
+        #     image="portfolio/images/pal_gwang.png",
+        # )
+        # Project.objects.create(  # pylint: disable=no-member
+        #     title="project_2",
+        #     description="project_2_description",
+        #     image="portfolio/images/pal_gwang.png",
+        # )
+
+    # Je veux tester que:
+    #   - la page contient le titre des deux projets
+    #   - la page contient la description des deux projets
+    #   - la page contient l'image des deux projets
+    #   - la page contient l'URL du premier projet
+    #   - le bloc (?) du second projet ne contient pas d'URL
+    def test_home_has_one_div_per_project_with_two(self):
+        Project.objects.create(title="project_1")  # pylint: disable=no-member
+        Project.objects.create(title="project_2")  # pylint: disable=no-member
         self.driver.get("%s%s" % (self.live_server_url, ""))
-        elements = self.driver.find_elements(By.TAG_NAME, "h1")
-        self.assertEqual(1, len(elements))
+        divs = self.driver.find_elements(By.TAG_NAME, "div")
+        rendered_projects = [
+            div
+            for div in divs
+            if div.get_attribute("id") == "project_1_id"
+            or div.get_attribute("id") == "project_2_id"
+        ]
+        self.assertEqual(2, len(rendered_projects))
+
+    def test_home_has_one_div_per_project_with_one(self):
+        Project.objects.create(title="project")  # pylint: disable=no-member
+        self.driver.get("%s%s" % (self.live_server_url, ""))
+        divs = self.driver.find_elements(By.TAG_NAME, "div")
+        rendered_projects = [
+            div for div in divs if div.get_attribute("id") == "project_id"
+        ]
+        self.assertEqual(1, len(rendered_projects))

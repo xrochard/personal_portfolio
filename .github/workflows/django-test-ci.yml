@@ -1,0 +1,13 @@
+# for details information, see at the bottom
+
+name: Django tests ran alone
+
+on:
+  push:
+
+jobs:
+  call-workflow-django-test:
+    uses: xrochard/personal_portfolio/.github/workflows/django-test-reusable.yml@v0.1
+
+#   - "call-workflow-django-test" runs "django-test-reusable" (i.e. thee unit tests and django integration tests)
+#     It is quite quick.
