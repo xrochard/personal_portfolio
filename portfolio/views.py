@@ -2,13 +2,20 @@ from django.shortcuts import render
 from .models import Project
 
 
-def all_projects():
-    return Project.objects.all()  # pylint: disable=no-member
+def model_project_query_all():
+    projects = []
+    for project in Project.objects.all():  # pylint: disable=no-member
+        projects.append(
+            {
+                "title": project.title,
+                "description": project.description,
+                "url": project.url,
+                "image": project.image,
+            }
+        )
+    return projects
 
 
 def home(request):
-    projects = all_projects()
-    rendered = []
-    for project in projects:
-        rendered.append({"id": project.title + "_id", "title": project.title})
-    return render(request, "home.html", {"projects": rendered})
+    projects = model_project_query_all()
+    return render(request, "home.html", {"projects": projects})

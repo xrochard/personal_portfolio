@@ -1,6 +1,7 @@
 from portfolio.models import Project
 from django.test import TestCase
 from parameterized import parameterized
+from django.db import utils
 
 
 class ProjectModelTest(TestCase):
@@ -26,3 +27,12 @@ class ProjectModelTest(TestCase):
     def test_project_with_empty_url(self):
         test_project = Project.objects.create()  # pylint: disable=no-member
         self.assertEqual("", test_project.url)
+
+    def test_project_title_is_unique(self):
+        error_raised = False
+        Project.objects.create(title="unique_title")  # pylint: disable=no-member
+        try:
+            Project.objects.create(title="unique_title")  # pylint: disable=no-member
+        except utils.IntegrityError:
+            error_raised = True
+        self.assertTrue(error_raised)

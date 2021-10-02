@@ -9,3 +9,8 @@ class Project(models.Model):
     image = models.ImageField(
         upload_to="portfolio/images/", default="portfolio/images/pal_gwang.png"
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["title"], name="unique_project_title")
+        ]

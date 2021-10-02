@@ -1,3 +1,4 @@
+from django.db import reset_queries
 from portfolio.models import Project
 from django.test import TestCase
 from portfolio import views
@@ -18,9 +19,41 @@ class ViewsTest(TestCase):
         Project.objects.create(title="project_1")  # pylint: disable=no-member
         Project.objects.create(title="project_2")  # pylint: disable=no-member
 
-    def test_all_projects_gets_all_projects(self):
-        result = views.all_projects()
+    def test_model_query_gets_all_projects(self):
+        result = views.model_project_query_all()
         self.assertEqual(2, len(result))
+
+    def test_model_query_gets_all_projects_empty_fields(self):
+        expected = [
+            {
+                "title": "project_1",
+                "description": "",
+                "url": "",
+                "image": "portfolio/images/pal_gwang.png",
+            },
+            {
+                "title": "project_2",
+                "description": "",
+                "url": "",
+                "image": "portfolio/images/pal_gwang.png",
+            },
+        ]
+        result = views.model_project_query_all()
+        for index in range(len(expected)):
+            self.assertDictEqual(expected[index], result[index])
+
+    def test_model_query_gets_optional_fields(self):
+        Project.objects.create(  # pylint: disable=no-member
+            title="project_3", description="description_3", url="http://url_3.com"
+        )
+        expected = {
+            "title": "project_3",
+            "description": "description_3",
+            "url": "http://url_3.com",
+            "image": "portfolio/images/pal_gwang.png",
+        }
+        result = views.model_project_query_all()[2]
+        self.assertDictEqual(expected, result)
 
     def test_home_context_holds_all_projects(self):
         expected_titles = ["project_1", "project_2"]

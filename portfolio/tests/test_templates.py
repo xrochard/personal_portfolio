@@ -51,8 +51,8 @@ class HomeTemplateTests(LiveServerTestCase):
         rendered_projects = [
             div
             for div in divs
-            if div.get_attribute("id") == "project_1_id"
-            or div.get_attribute("id") == "project_2_id"
+            if div.get_attribute("id") == "project_1"
+            or div.get_attribute("id") == "project_2"
         ]
         self.assertEqual(2, len(rendered_projects))
 
@@ -61,6 +61,6 @@ class HomeTemplateTests(LiveServerTestCase):
         self.driver.get("%s%s" % (self.live_server_url, ""))
         divs = self.driver.find_elements(By.TAG_NAME, "div")
         rendered_projects = [
-            div for div in divs if div.get_attribute("id") == "project_id"
+            div for div in divs if div.get_attribute("id") == "project"
         ]
         self.assertEqual(1, len(rendered_projects))
