@@ -32,5 +32,5 @@ class ViewsTest(TestCase):
         self.assertEqual(len(expected_titles), len(context_projects))
         actual_titles = []
         for project in context_projects:
-            actual_titles.append(project.title)
+            actual_titles.append(project["title"])
         self.assertEqual(set(expected_titles), set(actual_titles))

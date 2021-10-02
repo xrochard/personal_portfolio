@@ -8,4 +8,7 @@ def all_projects():
 
 def home(request):
     projects = all_projects()
-    return render(request, "home.html", {"projects": projects})
+    rendered = []
+    for project in projects:
+        rendered.append({"id": project.title + "_id", "title": project.title})
+    return render(request, "home.html", {"projects": rendered})

@@ -1,14 +1,16 @@
 # for details information, see at the bottom
 
-name: Django complete tests coverage and security check
+name: Django complete tests, coverage, and security check
 
-on: workflow_dispatch
+on:
+  push:
 
 jobs:
   call-workflow-django-test:
-    uses: xrochard/personal_portfolio/.github/workflows/django-test-reusable.yml@v1
-  call-workflow-django-extra:
-    uses: xrochard/personal_portfolio/.github/workflows/django-extra-ci-reusable.yml@v1
+    uses: xrochard/personal_portfolio/.github/workflows/django-test-reusable.yml@v1.1
+  call-workflow-django-coverage:
+    uses: xrochard/personal_portfolio/.github/workflows/django-coverage-reusable.yml@v1.1
+  call-workflow-django-security:
+    uses: xrochard/personal_portfolio/.github/workflows/django-security-reusable.yml@v1.1
 
-#   - All nine yards
-#     It is quite slow
+# No comment
