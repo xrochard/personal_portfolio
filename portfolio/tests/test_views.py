@@ -1,4 +1,3 @@
-from django.db import reset_queries
 from portfolio.models import Project
 from django.test import TestCase
 from portfolio import views

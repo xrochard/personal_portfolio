@@ -25,21 +25,7 @@ class HomeTemplateTests(LiveServerTestCase):
         cls.driver.quit()
         super(HomeTemplateTests, cls).tearDownClass()
 
-        # Project.objects.create(  # pylint: disable=no-member
-        #     title="project_1",
-        #     description="project_1_description",
-        #     url="http://url_to_project_1/",
-        #     image="portfolio/images/pal_gwang.png",
-        # )
-        # Project.objects.create(  # pylint: disable=no-member
-        #     title="project_2",
-        #     description="project_2_description",
-        #     image="portfolio/images/pal_gwang.png",
-        # )
-
     # Je veux tester que:
-    #   - la page contient le titre des deux projets
-    #   - la page contient la description des deux projets
     #   - la page contient l'image des deux projets
     #   - la page contient l'URL du premier projet
     #   - le bloc (?) du second projet ne contient pas d'URL
@@ -75,3 +61,14 @@ class HomeTemplateTests(LiveServerTestCase):
         ]
         result = rendered_projects[0].get_attribute("innerHTML")
         self.assertInHTML(test_title, result, count=1)
+
+    def test_home_has_description_in_project_div(self):
+        test_description = "Description of the test project"
+        Project.objects.create(  # pylint: disable=no-member
+            title="test", description=test_description
+        )
+        self.driver.get("%s%s" % (self.live_server_url, ""))
+        divs = self.driver.find_elements(By.TAG_NAME, "div")
+        rendered_projects = [div for div in divs if div.get_attribute("id") == "test"]
+        result = rendered_projects[0].get_attribute("innerHTML")
+        self.assertInHTML(test_description, result, count=1)
