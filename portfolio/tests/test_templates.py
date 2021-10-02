@@ -64,3 +64,14 @@ class HomeTemplateTests(LiveServerTestCase):
             div for div in divs if div.get_attribute("id") == "project"
         ]
         self.assertEqual(1, len(rendered_projects))
+
+    def test_home_has_title_in_project_div(self):
+        test_title = "title_of_the_test_project"
+        Project.objects.create(title=test_title)  # pylint: disable=no-member
+        self.driver.get("%s%s" % (self.live_server_url, ""))
+        divs = self.driver.find_elements(By.TAG_NAME, "div")
+        rendered_projects = [
+            div for div in divs if div.get_attribute("id") == test_title
+        ]
+        result = rendered_projects[0].get_attribute("innerHTML")
+        self.assertInHTML(test_title, result, count=1)
