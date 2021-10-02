@@ -1,3 +1,10 @@
 <h1>This my personal portfolio</h1>
-<div id="project_1_id"></div>
-<div id="project_2_id"></div>
+
+{% for project in projects %}
+title = project.title
+id = title + "_id"
+
+<div id=id>
+
+</div>
+{% endfor %}
