@@ -94,3 +94,13 @@ class HomeTemplateTests(LiveServerTestCase):
         url_elements = rendered_projects[0].find_elements(By.TAG_NAME, "a")
         result_url = url_elements[0].get_attribute("href")
         self.assertEqual(test_url, result_url)
+
+    def test_home_displays_no_link_if_no_url(self):
+        Project.objects.create(title="test")  # pylint: disable=no-member
+
+        self.driver.get("%s%s" % (self.live_server_url, ""))
+        divs = self.driver.find_elements(By.TAG_NAME, "div")
+        rendered_projects = [div for div in divs if div.get_attribute("id") == "test"]
+
+        url_elements = rendered_projects[0].find_elements(By.TAG_NAME, "a")
+        self.assertEqual(0, len(url_elements))
