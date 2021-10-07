@@ -25,10 +25,6 @@ class HomeTemplateTests(LiveServerTestCase):
         cls.driver.quit()
         super(HomeTemplateTests, cls).tearDownClass()
 
-    # Je veux tester que:
-    #   - la page contient l'image des deux projets
-    #   - la page contient l'URL du premier projet
-    #   - le bloc (?) du second projet ne contient pas d'URL
     def test_home_has_one_div_per_project_with_two(self):
         Project.objects.create(title="project_1")  # pylint: disable=no-member
         Project.objects.create(title="project_2")  # pylint: disable=no-member
