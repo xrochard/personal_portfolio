@@ -88,10 +88,7 @@ class HomeTemplateTests(LiveServerTestCase):
         self.driver.get("%s%s" % (self.live_server_url, "/blog/"))
         divs = self.driver.find_elements(By.TAG_NAME, "div")
         blogs = [div for div in divs if div.get_attribute("title") == "blog"]
-        first_blog = [
-            blog for blog in blogs if blog.get_attribute("title") == self.title_1
-        ][0]
-        first_blog_content = first_blog.get_attribute("innerHTML")
+        first_blog_content = blogs[0].get_attribute("innerHTML")
         self.assertInHTML(self.title_1, first_blog_content)
         self.assertInHTML(self.date_1, first_blog_content)
         self.assertInHTML(self.text_1, first_blog_content)
@@ -100,17 +97,7 @@ class HomeTemplateTests(LiveServerTestCase):
         self.driver.get("%s%s" % (self.live_server_url, "/blog/"))
         divs = self.driver.find_elements(By.TAG_NAME, "div")
         blogs = [div for div in divs if div.get_attribute("title") == "blog"]
-        second_blog = [
-            blog for blog in blogs if blog.get_attribute("title") == self.title_2
-        ][0]
-        second_blog_content = second_blog.get_attribute("innerHTML")
+        second_blog_content = blogs[1].get_attribute("innerHTML")
         self.assertInHTML(self.title_2, second_blog_content)
         self.assertInHTML(self.date_2, second_blog_content)
         self.assertInHTML(self.text_2, second_blog_content)
-
-    def test_blogs_order(self):
-        self.driver.get("%s%s" % (self.live_server_url, "/blog/"))
-        divs = self.driver.find_elements(By.TAG_NAME, "div")
-        blogs = [div for div in divs if div.get_attribute("title") == "blog"]
-        self.assertEqual(self.title_1, blogs[0].get_attribute("title"))
-        self.assertEqual(self.title_2, blogs[1].get_attribute("title"))
