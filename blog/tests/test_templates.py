@@ -21,33 +21,40 @@ class HomeTemplateTests(LiveServerTestCase):
             options=options, executable_path=driver_exe, service_log_path=os.devnull
         )
 
-    super.title_1 = "New Post"
-    super.date_1 = "JAN 23, 2020"
-    super.text_1 = "Hey there!"
-    super.title_2 = "What's New in Django 3?"
-    super.date_2 = "JAN 16, 2020"
-    lorem_ipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-    lorem_ipsum += "Sed non risus. "
-    lorem_ipsum += "Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, "
-    lorem_ipsum += "ultricies sed, dolor. Cras elementum ultrices diam. "
-    lorem_ipsum += "Maecenas ligula massa, varius a, semper congue, euismod non, mi. "
-    lorem_ipsum += "Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, "
-    lorem_ipsum += "non fermentum diam nisl sit amet erat. Duis semper. "
-    lorem_ipsum += "Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. "
-    lorem_ipsum += "Pellentesque congue. Ut in risus volutpat libero pharetra tempor. "
-    lorem_ipsum += "Cras vestibulum bibendum augue. Praesent egestas leo in pede. "
-    lorem_ipsum += "Praesent blandit odio eu enim. "
-    lorem_ipsum += "Pellentesque sed dui ut augue blandit sodales. "
-    lorem_ipsum += "Vestibulum ante ipsum primis in faucibus orci luctus "
-    lorem_ipsum += "et ultrices posuere cubilia Curae; "
-    lorem_ipsum += "Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. "
-    lorem_ipsum += "Maecenas adipiscing ante non diam sodales hendrerit."
-    super.text_2 = lorem_ipsum
-
     @classmethod
     def tearDownClass(cls) -> None:
         cls.driver.quit()
         super(HomeTemplateTests, cls).tearDownClass()
+
+    def setUp(self):
+        self.title_1 = "New Post"
+        self.date_1 = "JAN 23, 2020"
+        self.text_1 = "Hey there!"
+        self.title_2 = "What's New in Django 3?"
+        self.date_2 = "JAN 16, 2020"
+        lorem_ipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+        lorem_ipsum += "Sed non risus. "
+        lorem_ipsum += "Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, "
+        lorem_ipsum += "ultricies sed, dolor. Cras elementum ultrices diam. "
+        lorem_ipsum += "Maecenas ligula massa, varius a, semper congue, "
+        lorem_ipsum += "euismod non, mi. "
+        lorem_ipsum += "Proin porttitor, orci nec nonummy molestie, "
+        lorem_ipsum += "enim est eleifend mi, "
+        lorem_ipsum += "non fermentum diam nisl sit amet erat. Duis semper. "
+        lorem_ipsum += "Duis arcu massa, scelerisque vitae, consequat in, "
+        lorem_ipsum += "pretium a, enim. "
+        lorem_ipsum += "Pellentesque congue. Ut in risus volutpat "
+        lorem_ipsum += "libero pharetra tempor. "
+        lorem_ipsum += "Cras vestibulum bibendum augue. Praesent egestas leo in pede. "
+        lorem_ipsum += "Praesent blandit odio eu enim. "
+        lorem_ipsum += "Pellentesque sed dui ut augue blandit sodales. "
+        lorem_ipsum += "Vestibulum ante ipsum primis in faucibus orci luctus "
+        lorem_ipsum += "et ultrices posuere cubilia Curae; "
+        lorem_ipsum += "Aliquam nibh. Mauris ac mauris sed pede "
+        lorem_ipsum += "pellentesque fermentum. "
+        lorem_ipsum += "Maecenas adipiscing ante non diam sodales hendrerit."
+        self.text_2 = lorem_ipsum
+        return super().setUp()
 
     def test_all_blogs_has_title(self):
         expected = "Blog"
@@ -82,28 +89,28 @@ class HomeTemplateTests(LiveServerTestCase):
         divs = self.driver.find_elements(By.TAG_NAME, "div")
         blogs = [div for div in divs if div.get_attribute("title") == "blog"]
         first_blog = [
-            blog for blog in blogs if blog.get_attribute("title") == super.title_1
+            blog for blog in blogs if blog.get_attribute("title") == self.title_1
         ][0]
         first_blog_content = first_blog.get_attribute("innerHTML")
-        self.assertInHTML(super.title_1, first_blog_content)
-        self.assertInHTML(super.date_1, first_blog_content)
-        self.assertInHTML(super.text_1, first_blog_content)
+        self.assertInHTML(self.title_1, first_blog_content)
+        self.assertInHTML(self.date_1, first_blog_content)
+        self.assertInHTML(self.text_1, first_blog_content)
 
     def test_second_blog_content(self):
         self.driver.get("%s%s" % (self.live_server_url, "/blog/"))
         divs = self.driver.find_elements(By.TAG_NAME, "div")
         blogs = [div for div in divs if div.get_attribute("title") == "blog"]
         second_blog = [
-            blog for blog in blogs if blog.get_attribute("title") == super.title_2
+            blog for blog in blogs if blog.get_attribute("title") == self.title_2
         ][0]
         second_blog_content = second_blog.get_attribute("innerHTML")
-        self.assertInHTML(super.title_2, second_blog_content)
-        self.assertInHTML(super.date_2, second_blog_content)
-        self.assertInHTML(super.text_2, second_blog_content)
+        self.assertInHTML(self.title_2, second_blog_content)
+        self.assertInHTML(self.date_2, second_blog_content)
+        self.assertInHTML(self.text_2, second_blog_content)
 
     def test_blogs_order(self):
         self.driver.get("%s%s" % (self.live_server_url, "/blog/"))
         divs = self.driver.find_elements(By.TAG_NAME, "div")
         blogs = [div for div in divs if div.get_attribute("title") == "blog"]
-        self.assertEqual(super.title_1, blogs[0].get_attribute("title"))
-        self.assertEqual(super.title_2, blogs[1].get_attribute("title"))
+        self.assertEqual(self.title_1, blogs[0].get_attribute("title"))
+        self.assertEqual(self.title_2, blogs[1].get_attribute("title"))
