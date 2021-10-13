@@ -1,8 +1,8 @@
+import os
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
-import os
 from portfolio.models import Project
 
 
