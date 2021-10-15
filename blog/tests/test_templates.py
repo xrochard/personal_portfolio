@@ -85,7 +85,7 @@ class HomeTemplateTests(TestCase):
         soup = BeautifulSoup(response.content, features="html.parser")
         div_tags = soup.find_all("div")
         blogs = [div for div in div_tags if div["title"] == "blog"]
-        second_blog = blogs[0]
+        second_blog = blogs[1]
         self.assertEqual(1, len(second_blog.find_all(string=self.title_2)))
         self.assertEqual(1, len(second_blog.find_all(string=self.date_2)))
         self.assertEqual(1, len(second_blog.find_all(string=self.text_2)))
