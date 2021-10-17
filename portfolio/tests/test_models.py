@@ -1,7 +1,7 @@
-from portfolio.models import Project
 from django.test import TestCase
-from parameterized import parameterized
 from django.db import utils
+from parameterized import parameterized
+from portfolio.models import Project
 
 
 class ProjectModelTest(TestCase):
