@@ -32,7 +32,7 @@ jobs:
       uses: alexanderdamiani/pytester-cov@v1.2.1
       with:
         pytest-root-dir: '.'
-        cov-omit-list: 'core/*, */admin.py, */apps.py, manage.py, **/__init__.py, */tests/**, blog/view.py, portfolio/views.py'
+        cov-omit-list: 'core/*, */admin.py, */apps.py, manage.py, **/__init__.py, */tests/**, blog/views.py, portfolio/views.py'
         cov-threshold-single: ${{ env.COVERAGE_SINGLE }}
         cov-threshold-total: ${{ env.COVERAGE_TOTAL }}
 
