@@ -28,53 +28,53 @@ jobs:
         pip install coverage
 
 # For more details about the coverage, check the index.hml file in ./htmlcov directory
-    - name: coverage (simplifiedfor test)
+    - name: coverage
       id: coverage
       run: |
         coverage run --source='.' --rcfile=.coveragerc_ini manage.py test
-    #     coverage html
-    #     coverage report > ./htmlcov/coverage.txt
-    #     single-output = $(python -c 'from utils.coverage_parser import file_coverage_parser; file_coverage_parser(./htmlcov/coverage.txt)')
-    #     echo ::set-output name=single-output-success::single-output
-    #     whole-output = $(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser(./htmlcov/coverage.txt)')
-    #     echo ::set-output name=whole-output-success::whole-output
-    #     run: echo ::set-output name=output-table::$(cat ./htmlcov/coverage.txt)
+        coverage html
+        coverage report > ./htmlcov/coverage.txt
+        single-output = $(python -c 'from utils.coverage_parser import file_coverage_parser; file_coverage_parser(./htmlcov/coverage.txt)')
+        echo ::set-output name=single-output-success::single-output
+        whole-output = $(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser(./htmlcov/coverage.txt)')
+        echo ::set-output name=whole-output-success::whole-output
+        run: echo ::set-output name=output-table::$(cat ./htmlcov/coverage.txt)
 
-    # - name: Coverage single fail - new issue
-    #   if: ${{ steps.coverage.outputs.single-output-success != 'true' }}
-    #   uses: nashmaniac/create-issue-action@v1.1
-    #   with:
-    #     title: Python coverage single falls below minimum ${{ env.COVERAGE_SINGLE }}
-    #     token: ${{secrets.GITHUB_TOKEN}}
-    #     assignees: ${{github.actor}}
-    #     labels: worflow-failed
-    #     body: ${{ steps.coverage.outputs.output-table }}
+    - name: Coverage single fail - new issue
+      if: ${{ steps.coverage.outputs.single-output-success != 'true' }}
+      uses: nashmaniac/create-issue-action@v1.1
+      with:
+        title: Python coverage single falls below minimum ${{ env.COVERAGE_SINGLE }}
+        token: ${{secrets.GITHUB_TOKEN}}
+        assignees: ${{github.actor}}
+        labels: worflow-failed
+        body: ${{ steps.coverage.outputs.output-table }}
 
-    # - name: Coverage single fail - exit
-    #   if: ${{ steps.coverage.outputs.single-output-success != 'true' }}
-    #   run: |
-    #     echo "coverage single fail ${{ steps.coverage.outputs.single-output-success }}"
-    #     exit 1
+    - name: Coverage single fail - exit
+      if: ${{ steps.coverage.outputs.single-output-success != 'true' }}
+      run: |
+        echo "coverage single fail ${{ steps.coverage.outputs.single-output-success }}"
+        exit 1
 
-    # - name: Coverage total fail - new issue
-    #   if: ${{ steps.coverage.outputs.whole-output-success != 'true' }}
-    #   uses: nashmaniac/create-issue-action@v1.1
-    #   with:
-    #     title: Python coverage total falls below minimum ${{ env.COVERAGE_TOTAL }}
-    #     token: ${{secrets.GITHUB_TOKEN}}
-    #     assignees: ${{github.actor}}
-    #     labels: worflow-failed
-    #     body: ${{ steps.coverage.outputs.output-table }}
+    - name: Coverage total fail - new issue
+      if: ${{ steps.coverage.outputs.whole-output-success != 'true' }}
+      uses: nashmaniac/create-issue-action@v1.1
+      with:
+        title: Python coverage total falls below minimum ${{ env.COVERAGE_TOTAL }}
+        token: ${{secrets.GITHUB_TOKEN}}
+        assignees: ${{github.actor}}
+        labels: worflow-failed
+        body: ${{ steps.coverage.outputs.output-table }}
 
-    # - name: Coverage total fail - exit
-    #   if: ${{ steps.coverage.outputs.whole-output-success != 'true' }}
-    #   run: |
-    #     echo "cov total fail ${{ steps.coverage.outputs.whole-output-success }}"
-    #     exit 1
+    - name: Coverage total fail - exit
+      if: ${{ steps.coverage.outputs.whole-output-success != 'true' }}
+      run: |
+        echo "cov total fail ${{ steps.coverage.outputs.whole-output-success }}"
+        exit 1
 
-    # - name: Commit Python coverage table
-    #   uses: peter-evans/commit-comment@v1
-    #   with:
-    #     body: ${{ steps.coverage.outputs.output-table }}
+    - name: Commit Python coverage table
+      uses: peter-evans/commit-comment@v1
+      with:
+        body: ${{ steps.coverage.outputs.output-table }}
 
 # Freely inspired from github actions: alexanderdamiani/pytester-cov
