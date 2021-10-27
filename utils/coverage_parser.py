@@ -1,3 +1,6 @@
+import os
+
+
 def _extract_lines(file):
     with open(file, encoding="utf-8") as input_file:
         lines = input_file.readlines()
@@ -27,3 +30,9 @@ def whole_coverage_parser(file):
         return False
     print("true")
     return True
+
+
+def print_file_name():
+    print("Directory contents:")
+    for f in os.listdir():
+        print(f)
