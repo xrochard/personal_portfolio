@@ -4,9 +4,8 @@ def _extract_lines(file):
     return lines
 
 
-def file_coverage_parser(file=None):
-    if not file:
-        file = "./htmlcov/coverage.txt"
+def file_coverage_parser():
+    file = "./htmlcov/coverage.txt"
     lines = _extract_lines(file)
 
     for index in range(2, len(lines) - 2):
@@ -19,9 +18,8 @@ def file_coverage_parser(file=None):
     return True
 
 
-def whole_coverage_parser(file=None):
-    if not file:
-        file = "./htmlcov/coverage.txt"
+def whole_coverage_parser():
+    file = "./htmlcov/coverage.txt"
     lines = _extract_lines(file)
 
     blocks = lines[-1].split(" ")

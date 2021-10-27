@@ -9,3 +9,4 @@ omit =
     ./manage.py
     ./*/test.py
     ./blog/*/*.py
+    ./blog/*.py
