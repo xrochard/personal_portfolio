@@ -39,12 +39,7 @@ jobs:
       run: |
         echo ::set-output name=single-output-success::$(python -c 'from utils.coverage_parser import file_coverage_parser; file_coverage_parser()')
         echo ::set-output name=whole-output-success::$(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser()')
-        output=$(cat htmlcov/coverage.txt)
-        # put back the carriage return and newlines
-        output="${outputg//'%'/'%25'}"
-        output="${output//$'\n'/'%0A'}"
-        output="${output//$'\r'/'%0D'}"
-        echo "::set-output name=output-table::$output"
+        echo ::set-output name=output-table::$(cat htmlcov/index.html)
     - name: print trial
       run: |
         echo "${{ steps.coverage.outputs.output-table }}"
