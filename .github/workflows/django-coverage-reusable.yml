@@ -37,9 +37,8 @@ jobs:
     - name: coverage
       id: coverage
       run: |
-        python -c 'from utils.coverage_parser import print_file_name; print_file_name()'
+        single-output = $(python -c 'from utils.coverage_parser import file_coverage_parser; file_coverage_parser()')
         exit 1
-        single-output = $(python -c 'from utils.coverage_parser import file_coverage_parser; file_coverage_parser(htmlcov/coverage.txt)')
         echo ::set-output name=single-output-success::single-output
         whole-output = $(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser(htmlcov/coverage.txt)')
         echo ::set-output name=whole-output-success::whole-output

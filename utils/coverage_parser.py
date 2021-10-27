@@ -7,7 +7,8 @@ def _extract_lines(file):
     return lines
 
 
-def file_coverage_parser(file):
+def file_coverage_parser():
+    file = "./htmlcov/coverage.txt"
     lines = _extract_lines(file)
 
     for index in range(2, len(lines) - 2):
