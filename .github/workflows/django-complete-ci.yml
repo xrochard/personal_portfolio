@@ -7,9 +7,9 @@ on:
 
 jobs:
   call-workflow-django-test:
-    uses: xrochard/personal_portfolio/.github/workflows/django-test-reusable.yml@v1.2
+    uses: xrochard/personal_portfolio/.github/workflows/django-test-reusable.yml@v1.3
   call-workflow-django-coverage:
-    uses: xrochard/personal_portfolio/.github/workflows/django-coverage-reusable.yml@v1.2
+    uses: xrochard/personal_portfolio/.github/workflows/django-coverage-reusable.yml@v1.3
   call-workflow-django-security:
     uses: xrochard/personal_portfolio/.github/workflows/django-security-reusable.yml@v1.1
 
