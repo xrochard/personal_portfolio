@@ -50,6 +50,13 @@ jobs:
         labels: worflow-failed
         body: ${{ steps.coverage.outputs.output-table }}
 
+    - name: Coverage single fail - artifact html directory
+      if: ${{ steps.coverage.outputs.single-output-success != 'true' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: htmlcov
+        path: htmlcov/
+
     - name: Coverage single fail - exit
       if: ${{ steps.coverage.outputs.single-output-success != 'true' }}
       run: |
@@ -66,15 +73,28 @@ jobs:
         labels: worflow-failed
         body: ${{ steps.coverage.outputs.output-table }}
 
+    - name: Coverage total fail - artifact html directory
+      if: ${{ steps.coverage.outputs.whole-output-success != 'true' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: htmlcov
+        path: htmlcov/
+
     - name: Coverage total fail - exit
       if: ${{ steps.coverage.outputs.whole-output-success != 'true' }}
       run: |
         echo "cov total fail ${{ steps.coverage.outputs.whole-output-success }}"
         exit 1
 
-    - name: Commit Python coverage table
+    - name: Python coverage table
       uses: peter-evans/commit-comment@v1
       with:
         body: ${{ steps.coverage.outputs.output-table }}
+
+    - name: Coverage - artifact html directory
+      uses: actions/upload-artifact@v2
+      with:
+        name: htmlcov
+        path: htmlcov/
 
 # Freely inspired from github actions: alexanderdamiani/pytester-cov
