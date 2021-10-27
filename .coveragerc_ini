@@ -7,4 +7,5 @@ omit =
     ./*/admin.py
     ./*/apps.py
     ./manage.py
+    ./*/test.py
 

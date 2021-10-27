@@ -38,7 +38,7 @@ class ViewsTest(TestCase):
             },
         ]
         result = views.model_project_query_all()
-        for index in range(len(expected)):
+        for index in range(len(expected)):  # pylint: disable=consider-using-enumerate
             self.assertDictEqual(expected[index], result[index])
 
     def test_model_query_gets_optional_fields(self):

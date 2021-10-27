@@ -34,6 +34,9 @@ jobs:
       run: |
         python manage.py makemigrations
         python manage.py migrate
+    - name: Run utils tests
+      run: |
+        python -m  unittest discover utils
     - name: Test a connection to Django (sanity check)
       run: python manage.py test core/
     - name: run apps unit and integration tests
