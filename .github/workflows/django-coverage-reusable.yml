@@ -41,7 +41,8 @@ jobs:
         echo ::set-output name=whole-output-success::$(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser()')
         echo ::set-output name=output-table::$(cat htmlcov/coverage.txt)
     - name: print trial
-        run: echo "${{ steps.coverage.outputs.output-table }}"
+      run: |
+        echo "${{ steps.coverage.outputs.output-table }}"
         exit 1
     - name: Coverage single fail - new issue
       if: ${{ steps.coverage.outputs.single-output-success != 'true' }}
