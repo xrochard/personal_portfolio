@@ -49,10 +49,10 @@ jobs:
     - name: coverage
       id: coverage
       run: |
-        single-output=$(python -c 'from utils.coverage_parser import file_coverage_parser; file_coverage_parser()')
+        echo ::set-output name=single-output-success::$(python -c 'from utils.coverage_parser import file_coverage_parser; file_coverage_parser()')
         exit 1
         echo ::set-output name=single-output-success::single-output
-        whole-output = $(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser(htmlcov/coverage.txt)')
+        whole-output=$(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser(htmlcov/coverage.txt)')
         echo ::set-output name=whole-output-success::whole-output
         run: echo ::set-output name=output-table::$(cat htmlcov/coverage.txt)
 
