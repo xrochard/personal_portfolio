@@ -1,4 +1,5 @@
 Django==3.2.7
 Pillow  # needed to used ImageField in Django database
 beautifulsoup4  # used for test
-selenium #used for test
+selenium # used for test
+parameterized # used for test
