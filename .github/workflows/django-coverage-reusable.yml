@@ -34,27 +34,18 @@ jobs:
         coverage run --source='.' --rcfile=.coveragerc_ini manage.py test
         coverage html
         coverage report > ./htmlcov/coverage.txt
-    # - name: test run
-    #   id: tron
-    #   uses: jannekem/run-python-script-action@v1
-    #   with:
-    #     script: |
-    #       print(./htmlcov/coverage.txt)
-    #       set_output(tron-output, true)
-    # - name: test tron - exit
-    #   if: ${{ steps.tron.outputs.tron-output == 'true' }}
-    #   run: |
-    #     echo "tron-output ${{ steps.tron.outputs.tron-output }}"
-    #     exit 1
     - name: coverage
       id: coverage
       run: |
         echo ::set-output name=single-output-success::$(python -c 'from utils.coverage_parser import file_coverage_parser; file_coverage_parser()')
-        exit 1
-        echo ::set-output name=single-output-success::single-output
-        whole-output=$(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser(htmlcov/coverage.txt)')
-        echo ::set-output name=whole-output-success::whole-output
-        run: echo ::set-output name=output-table::$(cat htmlcov/coverage.txt)
+    - name: print test
+      run: |
+        echo "${{ steps.coverage.outputs.single-output-success }}"
+        ext1
+        # echo ::set-output name=single-output-success::single-output
+        # whole-output=$(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser(htmlcov/coverage.txt)')
+        # echo ::set-output name=whole-output-success::whole-output
+        # run: echo ::set-output name=output-table::$(cat htmlcov/coverage.txt)
 
     - name: Coverage single fail - new issue
       if: ${{ steps.coverage.outputs.single-output-success != 'true' }}
