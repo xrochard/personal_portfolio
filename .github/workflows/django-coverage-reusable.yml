@@ -25,6 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install coverage
 
 # For more details about the coverage, check the index.hml file in ./htmlcov directory
