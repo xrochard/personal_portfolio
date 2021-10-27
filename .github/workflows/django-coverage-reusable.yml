@@ -38,15 +38,11 @@ jobs:
       id: coverage
       run: |
         echo ::set-output name=single-output-success::$(python -c 'from utils.coverage_parser import file_coverage_parser; file_coverage_parser()')
-    - name: print test
-      run: |
-        echo "${{ steps.coverage.outputs.single-output-success }}"
-        ext1
-        # echo ::set-output name=single-output-success::single-output
-        # whole-output=$(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser(htmlcov/coverage.txt)')
-        # echo ::set-output name=whole-output-success::whole-output
-        # run: echo ::set-output name=output-table::$(cat htmlcov/coverage.txt)
-
+        echo ::set-output name=whole-output-success::$(python -c 'from utils.coverage_parser import whole_coverage_parser; whole_coverage_parser()')
+        echo ::set-output name=output-table::$(cat htmlcov/coverage.txt)
+    - name: Print dry run
+        run: echo "${{ steps.coverage.outputs.output-table }}"
+        exit 1
     - name: Coverage single fail - new issue
       if: ${{ steps.coverage.outputs.single-output-success != 'true' }}
       uses: nashmaniac/create-issue-action@v1.1
