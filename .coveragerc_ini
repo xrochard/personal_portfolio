@@ -8,5 +8,3 @@ omit =
     ./*/apps.py
     ./manage.py
     ./*/test.py
-    ./blog/*/*.py
-    ./blog/*.py
