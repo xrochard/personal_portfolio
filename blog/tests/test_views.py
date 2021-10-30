@@ -13,4 +13,4 @@ if __name__ == "__main__":
     unittest.main()
 
 # to run the tests on command line
-# python -m unittest blog.tests.test_views
+# python ./manage.py test blog.tests.test_views
