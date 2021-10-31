@@ -11,7 +11,7 @@ class BlogExtractor:
         titles = []
         for blog in self.blogs:
             tags = [tag for tag in blog.find_all("h3") if tag["title"] == "title"]
-            if len(tags) != 1:
+            if len(tags) == 1:
                 titles.append(tags[0])
             else:
                 titles.append(len(tags))
@@ -82,7 +82,16 @@ class BlogsTemplateWithThreeBlogTests(TestCase):
         self.assertEqual(len(extractor.blogs), 3)
 
     def test_titles_are_shown(self):
-        self.fail("test writing in progress")
+        extractor = BlogExtractor(self.soup)
+        actual_titles = set(extractor.get_blog_titles())
+
+        expected_titles = []
+        for blog in self.expected_blogs:
+            if isinstance(blog, dict):
+                expected_titles.append(blog["title"])
+        expected_titles = set(expected_titles)
+
+        self.assertEqual(actual_titles, expected_titles)
 
 
 # to run the tests on command line
