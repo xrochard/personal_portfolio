@@ -1,3 +1,4 @@
+from datetime import date
 from django.test import TestCase
 from blog.models import Blog
 
@@ -8,4 +9,5 @@ class BlogModelTestCase(TestCase):
         test_blog = Blog.objects.create(title=test_title)  # pylint:disable=no-member
         self.assertEqual(test_title, test_blog.title)
         self.assertEqual("", test_blog.text)
-        self.assertIsNotNone(test_blog.date)
+        expected_date = date.today()
+        self.assertEqual(expected_date, test_blog.date)
