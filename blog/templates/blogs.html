@@ -2,5 +2,7 @@
 <h2>Xavier has written {{ number }} blogs.</h2>
 
 {% for blog in blogs %}
-<div title="blog"></div>
+<div title="blog">
+    <h3 title="title">{{ blog.title }}</h3>
+</div>
 {% endfor %}

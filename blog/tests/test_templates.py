@@ -1,5 +1,5 @@
-from bs4 import BeautifulSoup
 import json
+from bs4 import BeautifulSoup
 from django.test import TestCase
 
 
@@ -12,7 +12,7 @@ class BlogExtractor:
         for blog in self.blogs:
             tags = [tag for tag in blog.find_all("h3") if tag["title"] == "title"]
             if len(tags) == 1:
-                titles.append(tags[0])
+                titles.append(tags[0].contents[0])
             else:
                 titles.append(len(tags))
         return titles
