@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 from django.test import TestCase
-from blog.models import Blog
 
 
 class BlogsTemplateTests(TestCase):
