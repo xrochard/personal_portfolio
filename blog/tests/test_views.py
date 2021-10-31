@@ -6,8 +6,10 @@ class BlogPageTest(TestCase):
         response = self.client.get("/blog/")
         self.assertEqual(200, response.status_code)
 
-    # def test_all_blogs_template_is_called(self):
-    #     self.fail("writing in progrress")
+    def test_all_blogs_template_is_called(self):
+        with self.assertTemplateUsed("blogs.html"):
+            response = self.client.get("/blog/")
+            self.assertEqual(response.status_code, 200)
 
 
 # to run the tests on command line
