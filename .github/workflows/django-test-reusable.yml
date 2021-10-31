@@ -41,8 +41,7 @@ jobs:
       run: python manage.py test core/
     - name: run apps unit and integration tests
       run: |
-        # TODO reactivate blog tests 
-        # python manage.py test blog/tests/
+        python manage.py test blog/tests/
         python manage.py test portfolio/tests/
 
   post-django-ci:
