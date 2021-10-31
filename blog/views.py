@@ -14,11 +14,7 @@ def blog_model_full_query():
     return blog_entries
 
 
-def from_blog_model_to_blogs():
-    return blog_model_full_query()
-
-
 def blogs(request):
-    blog_entries = from_blog_model_to_blogs()
+    blog_entries = blog_model_full_query()
     number = len(blog_entries)
     return render(request, "blogs.html", {"number": number, "blogs": blog_entries})
