@@ -1,0 +1,9 @@
+[
+    {
+        "model": "blog.Blog",
+        "pk": 1,
+        "fields": {
+            "title": "First blog"
+        }
+    }
+]
