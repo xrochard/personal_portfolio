@@ -1,19 +1,14 @@
-import unittest
-from django.test import Client
+from django.test import TestCase
 
 
-class BlogPageTest(unittest.TestCase):
+class BlogPageTest(TestCase):
     def test_url_blog_redirection(self):
-        client = Client()
-        response = client.get("/blog/")
+        response = self.client.get("/blog/")
         self.assertEqual(200, response.status_code)
 
     # def test_all_blogs_template_is_called(self):
     #     self.fail("writing in progrress")
 
-
-if __name__ == "__main__":
-    unittest.main()
 
 # to run the tests on command line
 # python ./manage.py test blog.tests.test_views
