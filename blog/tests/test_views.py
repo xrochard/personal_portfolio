@@ -1,3 +1,4 @@
+import json
 from django.test import TestCase
 from blog import views
 
@@ -13,12 +14,22 @@ class BlogURLTest(TestCase):
             self.assertEqual(response.status_code, 200)
 
 
-class BlogModelFullQuery(TestCase):
+class BlogModelFullQueryOneBasicBlog(TestCase):
     fixtures = ["one_blog.json"]
 
     def test_dummy(self):
-        test_entries = views.blog_model_full_query()
-        self.assertEqual(1, len(test_entries))
+        with open("./blog/fixtures/one_blog.json", encoding="utf-8") as json_fixtures:
+            fixtures_list = json.load(json_fixtures)
+        expected_entries = [
+            json_entry["fields"]
+            for json_entry in fixtures_list
+            if json_entry["model"] == "blog.Blog"
+        ]
+        for entry in expected_entries:
+            entry["text"] = ""
+
+        actual_entries = views.blog_model_full_query()
+        self.assertListEqual(actual_entries, expected_entries)
 
 
 # to run the tests on command line
