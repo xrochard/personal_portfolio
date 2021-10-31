@@ -12,7 +12,7 @@ class BlogsTemplateTests(TestCase):
         self.assertEqual(1, len(h1_tags))
         self.assertEqual("Blog", h1_tags[0].contents[0])
 
-    def test_show_the_number_of_blogs(self):
+    def test_show_zero_as_the_number_of_blogs(self):
         h2_tags = self.soup.find_all("h2")
         self.assertEqual(1, len(h2_tags))
         self.assertEqual("Xavier has written 0 blogs.", h2_tags[0].contents[0])
