@@ -17,6 +17,18 @@ class BlogExtractor:
                 titles.append(len(tags))
         return titles
 
+    def get_blog_title_and_text(self):
+        title_and_text = []
+        for blog in self.blogs:
+            title_tags = [tag for tag in blog.find_all(title="title")]
+            if len(title_tags) != 1:
+                continue
+            text_tags = [tag for tag in blog.find_all(title="text")]
+            if len(text_tags) != 1:
+                continue
+            title_and_text.append((title_tags[0].contents[0], text_tags[0].contents[0]))
+        return title_and_text
+
 
 class BlogsTemplateTests(TestCase):
     def setUp(self):
@@ -93,7 +105,20 @@ class BlogsTemplateWithThreeBlogTests(TestCase):
 
         self.assertEqual(actual_titles, expected_titles)
 
+    def test_titles_and_text_are_together_in_blogs(self):
+        extractor = BlogExtractor(self.soup)
+        actual_title_and_text = set(extractor.get_blog_title_and_text())
+
+        expected_title_and_text = []
+        for blog in self.expected_blogs:
+            if isinstance(blog, dict):
+                expected_tuple = (blog["title"], blog["text"])
+                expected_title_and_text.append(expected_tuple)
+        expected_title_and_text = set(expected_title_and_text)
+
+        self.assertEqual(actual_title_and_text, expected_title_and_text)
+
 
 # to run the tests on command line
-# python ./manage.py test blog.tests.test_views
+# python ./manage.py test blog.tests.test_templates
 #
