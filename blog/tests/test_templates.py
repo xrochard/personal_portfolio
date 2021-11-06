@@ -10,7 +10,7 @@ class BlogExtractor:
     def get_blog_titles(self):
         titles = []
         for blog in self.blogs:
-            tags = [tag for tag in blog.find_all("h3") if tag["title"] == "title"]
+            tags = blog.find_all("h3", title="title")
             if len(tags) == 1:
                 titles.append(tags[0].contents[0])
             else:
@@ -20,10 +20,10 @@ class BlogExtractor:
     def get_blog_title_and_text(self):
         title_and_text = []
         for blog in self.blogs:
-            title_tags = [tag for tag in blog.find_all(title="title")]
+            title_tags = blog.find_all(title="title")
             if len(title_tags) != 1:
                 continue
-            text_tags = [tag for tag in blog.find_all(title="text")]
+            text_tags = blog.find_all(title="text")
             if len(text_tags) != 1:
                 continue
             title_and_text.append((title_tags[0].contents[0], text_tags[0].contents[0]))
