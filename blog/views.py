@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render
 from blog.models import Blog
 
@@ -17,5 +18,7 @@ def blog_model_full_query():
 
 def blogs(request):
     blog_entries = blog_model_full_query()
+    for entry in blog_entries:
+        entry["date"] = datetime.strftime(entry["date"], "%Y-%m-%d")
     number = len(blog_entries)
     return render(request, "blogs.html", {"number": number, "blogs": blog_entries})
