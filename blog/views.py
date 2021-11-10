@@ -1,6 +1,5 @@
-from datetime import datetime
 from django.shortcuts import render
-from blog.domain import data_format
+from blog.domain import blog_handling
 from blog.models import Blog
 
 
@@ -19,6 +18,6 @@ def blog_model_full_query():
 
 def blogs(request):
     blog_entries = blog_model_full_query()
-    blog_entries = data_format.date_format(blog_entries)
+    blog_entries = blog_handling.date_format(blog_entries)
     number = len(blog_entries)
     return render(request, "blogs.html", {"number": number, "blogs": blog_entries})

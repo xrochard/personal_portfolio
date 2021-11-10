@@ -1,6 +1,6 @@
 from datetime import datetime
 import unittest
-from blog.domain import data_format
+from blog.domain import blog_handling
 
 
 class FormatterTest(unittest.TestCase):
@@ -12,7 +12,7 @@ class FormatterTest(unittest.TestCase):
             {key: value for key, value in entry.items()} for entry in test_data
         ]
         expected_data[0]["date"] = "2020-01-16"
-        self.assertEqual(data_format.date_format(test_data), expected_data)
+        self.assertEqual(blog_handling.date_format(test_data), expected_data)
 
 
 # to run the tests on command line
