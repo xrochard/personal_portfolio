@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from django.test import TestCase
 from blog import views
 
@@ -27,6 +28,7 @@ class BlogModelFullQueryOneBasicBlog(TestCase):
         ]
         for entry in expected_entries:
             entry["text"] = ""
+            entry["date"] = datetime.now().date()
 
         actual_entries = views.blog_model_full_query()
         self.assertListEqual(actual_entries, expected_entries)
@@ -46,6 +48,8 @@ class BlogModelFullQueryThreeBlogs(TestCase):
             for json_entry in fixtures_list
             if json_entry["model"] == "blog.Blog"
         ]
+        for entry in expected_entries:
+            entry["date"] = datetime.strptime(entry["date"], "%Y-%m-%d").date()
 
         actual_entries = views.blog_model_full_query()
         self.assertListEqual(actual_entries, expected_entries)

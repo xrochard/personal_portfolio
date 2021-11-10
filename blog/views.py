@@ -9,6 +9,7 @@ def blog_model_full_query():
             {
                 "title": blog_entry.title,
                 "text": blog_entry.text,
+                "date": blog_entry.date,
             }
         )
     return blog_entries
