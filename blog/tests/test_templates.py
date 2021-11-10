@@ -124,9 +124,12 @@ class BlogsTemplateWithThreeBlogTests(TestCase):
 
         expected_title_and_date = []
         for blog in self.expected_blogs:
-            if isinstance(blog, dict):
-                expected_tuple = (blog["title"], blog["date"])
-                expected_title_and_date.append(expected_tuple)
+            if isinstance(blog, dict) and blog["title"] == "Oldest post":
+                expected_title_and_date.append(("Oldest post", "2020 JAN 1"))
+            if isinstance(blog, dict) and blog["title"] == "New post":
+                expected_title_and_date.append(("New post", "2021 NOV 10"))
+            if isinstance(blog, dict) and blog["title"] == "Lorem ipsum":
+                expected_title_and_date.append(("Lorem ipsum", "2021 FEB 6"))
         expected_title_and_date = set(expected_title_and_date)
 
         self.assertEqual(actual_title_and_date, expected_title_and_date)
