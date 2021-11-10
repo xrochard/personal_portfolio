@@ -17,17 +17,17 @@ class BlogExtractor:
                 titles.append(len(tags))
         return titles
 
-    def get_blog_title_and_text(self):
-        title_and_text = []
+    def get_title_and_extra(self, tag):
+        couples = []
         for blog in self.blogs:
-            title_tags = blog.find_all(title="title")
-            if len(title_tags) != 1:
+            titles = blog.find_all(title="title")
+            if len(titles) != 1:
                 continue
-            text_tags = blog.find_all(title="text")
-            if len(text_tags) != 1:
+            extras = blog.find_all(title=tag)
+            if len(extras) != 1:
                 continue
-            title_and_text.append((title_tags[0].contents[0], text_tags[0].contents[0]))
-        return title_and_text
+            couples.append((titles[0].contents[0], extras[0].contents[0]))
+        return couples
 
 
 class BlogsTemplateTests(TestCase):
@@ -105,9 +105,9 @@ class BlogsTemplateWithThreeBlogTests(TestCase):
 
         self.assertEqual(actual_titles, expected_titles)
 
-    def test_titles_and_text_are_together_in_blogs(self):
+    def test_titles_and_texts_are_together_in_blogs(self):
         extractor = BlogExtractor(self.soup)
-        actual_title_and_text = set(extractor.get_blog_title_and_text())
+        actual_title_and_text = set(extractor.get_title_and_extra("text"))
 
         expected_title_and_text = []
         for blog in self.expected_blogs:
@@ -117,6 +117,19 @@ class BlogsTemplateWithThreeBlogTests(TestCase):
         expected_title_and_text = set(expected_title_and_text)
 
         self.assertEqual(actual_title_and_text, expected_title_and_text)
+
+    def test_titles_and_dates_are_together_in_blogs(self):
+        extractor = BlogExtractor(self.soup)
+        actual_title_and_date = set(extractor.get_title_and_extra("date"))
+
+        expected_title_and_date = []
+        for blog in self.expected_blogs:
+            if isinstance(blog, dict):
+                expected_tuple = (blog["title"], blog["date"])
+                expected_title_and_date.append(expected_tuple)
+        expected_title_and_date = set(expected_title_and_date)
+
+        self.assertEqual(actual_title_and_date, expected_title_and_date)
 
 
 # to run the tests on command line
