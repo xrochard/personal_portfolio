@@ -10,3 +10,7 @@ def date_format(data):
         day = formated_date.split(",")[0].split()[1]
         entry["date"] = f"{year} {month} {day}"
     return data
+
+
+def sort(data):
+    return sorted(data, key=lambda entry: entry["date"], reverse=True)

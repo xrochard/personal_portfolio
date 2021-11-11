@@ -3,7 +3,7 @@ import unittest
 from blog.domain import blog_handling
 
 
-class FormatterTest(unittest.TestCase):
+class BlogHandlingTest(unittest.TestCase):
     def test_date_formatting(self):
         test_data = [
             {
@@ -30,6 +30,27 @@ class FormatterTest(unittest.TestCase):
         expected_data[1]["date"] = "2020 MAR 18"
         expected_data[2]["date"] = "2020 JUL 1"
         self.assertEqual(blog_handling.date_format(test_data), expected_data)
+
+    def test_sort_antichronologicallly(self):
+        test_data = [
+            {
+                "title": "oldest",
+                "text": "test_text",
+                "date": datetime.strptime("2020-01-16", "%Y-%m-%d").date(),
+            },
+            {
+                "title": "middle",
+                "text": "test_text",
+                "date": datetime.strptime("2020-03-18", "%Y-%m-%d").date(),
+            },
+            {
+                "title": "newest",
+                "text": "test_text",
+                "date": datetime.strptime("2020-07-1", "%Y-%m-%d").date(),
+            },
+        ]
+        expected_data = [test_data[2], test_data[1], test_data[0]]
+        self.assertEqual(blog_handling.sort(test_data), expected_data)
 
 
 # to run the tests on command line

@@ -18,6 +18,7 @@ def blog_model_full_query():
 
 def blogs(request):
     blog_entries = blog_model_full_query()
+    blog_entries = blog_handling.sort(blog_entries)
     blog_entries = blog_handling.date_format(blog_entries)
     number = len(blog_entries)
     return render(request, "blogs.html", {"number": number, "blogs": blog_entries})

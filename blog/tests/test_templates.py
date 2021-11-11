@@ -134,6 +134,17 @@ class BlogsTemplateWithThreeBlogTests(TestCase):
 
         self.assertEqual(actual_title_and_date, expected_title_and_date)
 
+    def test_titles_are_in_antichronological_order(self):
+        extractor = BlogExtractor(self.soup)
+        actual_titles = extractor.get_blog_titles()
+
+        expected_titles = [
+            "New post",
+            "Lorem ipsum",
+            "Oldest post",
+        ]
+        self.assertEqual(actual_titles, expected_titles)
+
 
 # to run the tests on command line
 # python ./manage.py test blog.tests.test_templates
