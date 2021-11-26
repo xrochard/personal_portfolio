@@ -1,5 +1,11 @@
 <h1>This my personal portfolio</h1>
 
+{% load static %}
+
+<a href="{% static 'pdf/portfolio_sheet.pdf' %}">Character sheet</a>
+
+<img src="{% static 'img/portfolio_blue_cat.jpg' %}" width="50%">
+
 {% for project in projects %}
 <div id={{ project.title }}>
     <h2>{{ project.title }}</h2>
