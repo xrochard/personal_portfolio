@@ -1,4 +1,4 @@
-Django==3.2.15
+Django==3.2.16
 Pillow  # needed to used ImageField in Django database
 Babel
 beautifulsoup4  # used for test
